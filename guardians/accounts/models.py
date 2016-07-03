@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
+from django.contrib.auth.models import User
 from django.conf import settings
 
 
@@ -17,3 +18,16 @@ class Profile(models.Model):
 
     def __str__(self):
         return str(self.user)
+
+
+@python_2_unicode_compatible
+class Group(models.Model):
+    """
+    Group model
+    """
+    name = models.CharField(max_length=128)
+    members = models.ManyToManyField(User)
+    description = models.TextField(max_length=5000)
+
+    def __str__(self):
+        return self.name
