@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.contrib.auth.models import User
 from django.conf import settings
+from badges.models import Badge
 
 
 @python_2_unicode_compatible
@@ -15,6 +16,7 @@ class Profile(models.Model):
                                 related_name='profile')
     bio = models.TextField(default='')
     image = models.ImageField(upload_to='/photos/')
+    badges = models.ManyToManyField(Badge)
 
     def __str__(self):
         return str(self.user)
