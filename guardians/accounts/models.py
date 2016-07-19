@@ -27,7 +27,7 @@ class Group(models.Model):
     """
     name = models.CharField(max_length=128)
     members = models.ManyToManyField(User)
-    description = models.TextField(max_length=5000)
+    description = models.TextField(max_length=1000)
 
     def __str__(self):
         return self.name

@@ -3,7 +3,7 @@ from django.conf import settings
 from django.db.models.signals import post_save
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver
-from .models import Profile
+from accounts.models import Profile
 import logging
 
 logger = logging.getLogger(__name__)
@@ -13,13 +13,12 @@ logger = logging.getLogger(__name__)
 def create_user_profile(sender, **kwargs):
     if kwargs.get('created', False):
         instance = kwargs.get('instance', None)
-        if instance is not None:
-            try:
-                new_profile = Profile(user=instance)
-                new_profile.save()
-            except (KeyError, ValueError):
-                msg = 'Unable to create profile for specified user.'
-                logger.error(msg.format(instance))
+        try:
+            new_profile = Profile(user=instance)
+            new_profile.save()
+        except (KeyError, ValueError):
+            msg = 'Unable to create profile for specified user.'
+            logger.error(msg.format(instance))
 
 
 @receiver(pre_delete, sender=settings.AUTH_USER_MODEL)
